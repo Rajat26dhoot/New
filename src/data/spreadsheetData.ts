@@ -1,4 +1,19 @@
-export  const spreadsheetData = [
+export type SpreadsheetRow = {
+  jobRequest?: string;
+  submittedDate?: string;
+  status?: string;
+  statusBgColor?: string;
+  statusTextColor?: string;
+  submitter?: string;
+  portfolioLink?: string;
+  name?: string;
+  priority?: string;
+  priorityColor?: string;
+  dueDate?: string;
+  value?: string | number;
+}; 
+
+export  const spreadsheetData : SpreadsheetRow[] =[
   {
     name: "Sophie Choudhury",
     submitter: "Aisha Patel",

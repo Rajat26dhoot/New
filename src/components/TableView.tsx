@@ -17,25 +17,39 @@ import NameHeader from './NameHeader'; // Import the NameHeader component
 import PriorityHeader from './PriorityHeader';
 import ValueHeader from './ValueHeader';
 import DueDateHeader from './DueDateHeader';
-
+import type { SpreadsheetRow } from '../data/spreadsheetData'
 // Data
 import { spreadsheetData } from '../data/spreadsheetData';
 
 // Register module (only once globally)
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
+type CellRendererParams = {
+  value: string;
+  data?: {
+    statusBgColor?: string;
+    statusTextColor?: string;
+  };
+};
+
+type CellRendererParamsother = {
+  value: string;
+  data: {
+    priorityColor: string;
+  };
+};
 
 
 const TableView: React.FC = () => {
   const emptyRows = useMemo(() => Array.from({ length: 15 }, () => ({})), []);
-  const rowDataWithBlank = useMemo(() => [...spreadsheetData, ...emptyRows], []);
+ const rowDataWithBlank: SpreadsheetRow[] = useMemo(() => [...spreadsheetData, ...emptyRows], [emptyRows]);
   
 
   const columnDefs = useMemo(() => [
    {
       headerName: '#',
       width: 40, 
-      valueGetter: (params: any) => params.node.rowIndex + 1,
+      valueGetter: (params: { node: { rowIndex: number } }) => params.node.rowIndex + 1,
       suppressMovable: true,
       },
     {
@@ -60,7 +74,7 @@ const TableView: React.FC = () => {
       width: 150,
       headerStyle: { margin:0,padding: 0,},
       headerComponent: StatusHeader,
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: CellRendererParams) => {
         if (!params.value) return '';
         return (
           <span
@@ -93,7 +107,7 @@ const TableView: React.FC = () => {
       width: 120,
       headerStyle: { margin:0,padding: 0,},
       headerComponent: PriorityHeader,
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: CellRendererParamsother) => {
   return (
     <span
       style={{
@@ -121,7 +135,9 @@ const TableView: React.FC = () => {
       headerStyle: { margin:0,padding: 0,},
       headerComponent: ValueHeader,
       cellStyle: { textAlign: 'right' },
-      valueFormatter: (params: any) => params.value ? `${params.value} ₹` : ''
+      valueFormatter: (params: { value?: string | number }) =>
+  params.value ? `${params.value} ₹` : ''
+
     },{
       flex: 1,
     }
@@ -137,7 +153,7 @@ const TableView: React.FC = () => {
     <div className="ag-theme-quartz" style={{ width: '100%',overflowX: 'hidden', }}>
 
       <TableHeader />
-      <AgGridReact
+     <AgGridReact<SpreadsheetRow>
         rowData={rowDataWithBlank}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}

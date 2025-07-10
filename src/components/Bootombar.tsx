@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const tabs = [
   { label: "All Orders", active: true },
