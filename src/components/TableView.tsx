@@ -29,6 +29,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 const TableView: React.FC = () => {
   const emptyRows = useMemo(() => Array.from({ length: 15 }, () => ({})), []);
   const rowDataWithBlank = useMemo(() => [...spreadsheetData, ...emptyRows], []);
+  
 
   const columnDefs = useMemo(() => [
    {

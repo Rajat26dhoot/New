@@ -1,9 +1,8 @@
 import React from 'react';
-import { ChevronRight, Bell, Search, MoreHorizontal } from 'lucide-react';
 
 export default function Topbar() {
   return (
-    <div className="flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 overflow-hidden px-4 py-2 bg-white border-t-0 border-r-0 border-b border-l-0 border-[#eee]">
+    <div className="flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 overflow-hidden px-4 py-1 bg-white border-t-0 border-r-0 border-b border-l-0 border-[#eee]">
     <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-4">
       <svg
         width={24}
@@ -59,7 +58,7 @@ export default function Topbar() {
           />
         </svg>
         <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2">
-          <p className="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-[#121212]">
+          <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#121212]">
             Spreadsheet 3
           </p>
           <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 w-6 h-6 relative gap-2 rounded">
@@ -82,7 +81,8 @@ export default function Topbar() {
       </div>
     </div>
     <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 gap-1">
-      <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-3 rounded-md bg-[#f6f6f6]">
+      <div onClick={() => console.log('Search clicked')}
+      className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-3 rounded-md bg-[#f3f2f2]">
         <svg
           width={16}
           height={16}
@@ -109,7 +109,8 @@ export default function Topbar() {
           Search within sheet
         </p>
       </div>
-      <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-3 p-2 rounded-lg bg-white">
+      <div  onClick={() => console.log('Notification clicked')}
+      className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-3 p-2 rounded-lg bg-white">
         <svg
           width={24}
           height={24}

@@ -1,22 +1,12 @@
-import React from "react";
-import {
-  ChevronsRight,
-  EyeOff,
-  SortAsc,
-  Filter,
-  Expand,
-  Download,
-  Upload,
-  Share2,
-  PlusCircle
-} from "lucide-react";
+
 
 export default function Toolbar() {
   return (
     <div className="flex flex-row-reverse justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2 px-2 py-1.5 bg-white border-t-0 border-r-0 border-b border-l-0 border-[#eee]">
     <div className="flex justify-end items-center flex-grow-0 flex-shrink-0 gap-2">
       <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 gap-2">
-        <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-1 pl-2 pr-3 py-2 rounded-md bg-white border border-[#eee]">
+        <div onClick={() => console.log('Import Button clicked')}
+        className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-1 pl-2 pr-3 py-2 rounded-md bg-white border border-[#eee]">
           <svg
             width={20}
             height={20}
@@ -33,7 +23,8 @@ export default function Toolbar() {
           </svg>
           <p className="flex-grow-0 flex-shrink-0 text-sm text-left text-[#545454]">Import</p>
         </div>
-        <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-1 pl-2 pr-3 py-2 rounded-md bg-white border border-[#eee]">
+        <div onClick={() => console.log('Export Button clicked')}
+        className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-1 pl-2 pr-3 py-2 rounded-md bg-white border border-[#eee]">
           <svg
             width={20}
             height={20}
@@ -50,7 +41,8 @@ export default function Toolbar() {
           </svg>
           <p className="flex-grow-0 flex-shrink-0 text-sm text-left text-[#545454]">Export</p>
         </div>
-        <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-1 pl-2 pr-3 py-2 rounded-md bg-white border border-[#eee]">
+        <div onClick={() => console.log('Share Button clicked')}
+        className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-1 pl-2 pr-3 py-2 rounded-md bg-white border border-[#eee]">
           <svg
             width={20}
             height={20}
@@ -68,7 +60,8 @@ export default function Toolbar() {
           <p className="flex-grow-0 flex-shrink-0 text-sm text-left text-[#545454]">Share</p>
         </div>
       </div>
-      <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-1 px-6 py-2 rounded-md bg-[#4b6a4f]">
+      <div onClick={() => console.log('Action clicked')}
+      className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-1 px-6 py-2 rounded-md bg-[#4b6a4f]">
         <svg
           width={20}
           height={20}
