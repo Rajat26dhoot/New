@@ -51,10 +51,7 @@ const TableView: React.FC = () => {
       width: 150,
       headerStyle: { margin:0,padding: 0,},
       headerComponent: SubmittedHeaderComponent,
-      valueFormatter: (params: any) => {
-        const date = new Date(params.value);
-        return isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-GB');
-      }
+      cellStyle: { textAlign: 'center' },
     },
     {
       headerName: '',
@@ -71,7 +68,8 @@ const TableView: React.FC = () => {
               color: params.data?.statusTextColor,
               borderRadius: '12px',
               padding: '2px 8px',
-              display: 'inline-block'
+              display: 'inline-block',
+              fontWeight: 700,
             }}
           >
             {params.value}
@@ -86,7 +84,6 @@ const TableView: React.FC = () => {
       width: 200,
       headerStyle: { margin:0,padding: 0,},
       headerComponent: UrlHeader,
-
     },
     { headerName: 'Name', field: 'name', width: 150 , headerComponent: NameHeader,headerStyle: { margin:0,padding: 0,},},
     {
@@ -95,10 +92,19 @@ const TableView: React.FC = () => {
       width: 120,
       headerStyle: { margin:0,padding: 0,},
       headerComponent: PriorityHeader,
-      cellStyle: (params: any) => ({
-        color: params.data?.priorityColor,
-        fontWeight: 'bold'
-      })
+      cellRenderer: (params: any) => {
+  return (
+    <span
+      style={{
+        color: params.data.priorityColor,
+        fontWeight: 700,
+      }}
+    >
+      {params.value}
+    </span>
+  );
+}
+
     },
     {
       headerName: 'Due Date',
@@ -106,10 +112,6 @@ const TableView: React.FC = () => {
       width: 120,
       headerStyle: { margin:0,padding: 0,},
       headerComponent: DueDateHeader,
-      valueFormatter: (params: any) => {
-        const date = new Date(params.value);
-        return isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-GB');
-      }
     },
     {
       headerName: 'Value',
@@ -118,9 +120,9 @@ const TableView: React.FC = () => {
       headerStyle: { margin:0,padding: 0,},
       headerComponent: ValueHeader,
       cellStyle: { textAlign: 'right' },
-      valueFormatter: (params: any) => params.value ? `$${params.value}` : ''
+      valueFormatter: (params: any) => params.value ? `${params.value} ₹` : ''
     },{
-      width: 120,
+      flex: 1,
     }
   ], []);
 
@@ -138,7 +140,7 @@ const TableView: React.FC = () => {
         rowData={rowDataWithBlank}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
-        rowHeight={25}
+        rowHeight={26}
         domLayout="autoHeight"
       />
     </div>

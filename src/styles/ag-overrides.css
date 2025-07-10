@@ -1,17 +1,21 @@
 /* src/styles/ag-overrides.css */
 
 .ag-theme-quartz .ag-root-wrapper {
-  --ag-borders-color: #888; /* Darker than default (#ccc) */
+  --ag-borders-color: #e9e6e6; /* Darker than default (#ccc) */
 }
 
 /* Optional: cell vertical borders */
 .ag-theme-quartz .ag-cell {
-  border-right: 1px solid #888 !important;
+  border-right: 1px solid #e9e6e6 !important;
 }
 
 /* Optional: row bottom border */
 .ag-theme-quartz .ag-row {
-  border-bottom: 1px solid #888 !important;
+  border-bottom: 1px solid #e9e6e6 !important;
 }
 
+
+.ag-theme-quartz .ag-cell {
+  font-size: 12px !important;
+}
 
