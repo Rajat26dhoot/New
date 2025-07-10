@@ -1,28 +1,24 @@
 import React, { useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ClientSideRowModelModule } from 'ag-grid-community';
-import { ModuleRegistry } from 'ag-grid-community';
-import TableHeader from './TableHeader';
-import type { ValueGetterParams } from 'ag-grid-community';
-
-// Styles
+import { ClientSideRowModelModule, ModuleRegistry, type ValueGetterParams, type ColDef } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
-import '../styles/ag-overrides.css'; // ✅ Add this line for custom styles
-import JobRequestHeader from './JobRequestHeader'; 
+import '../styles/ag-overrides.css';
+
+import TableHeader from './TableHeader';
+import JobRequestHeader from './JobRequestHeader';
 import SubmittedHeaderComponent from './SubmittedHeaderComponent';
-import StatusHeader from './StatusHeader'; // Import the StatusHeader component
-import SubmitHeader from './SubmitHeader'; // Import the SubmitHeader component
-import UrlHeader from './UrlHeader'; // Import the UrlHeader component
-import NameHeader from './NameHeader'; // Import the NameHeader component
+import StatusHeader from './StatusHeader';
+import SubmitHeader from './SubmitHeader';
+import UrlHeader from './UrlHeader';
+import NameHeader from './NameHeader';
 import PriorityHeader from './PriorityHeader';
 import ValueHeader from './ValueHeader';
 import DueDateHeader from './DueDateHeader';
-import type { SpreadsheetRow } from '../data/spreadsheetData'
-// Data
-import { spreadsheetData } from '../data/spreadsheetData';
 
-// Register module (only once globally)
+import { spreadsheetData, type SpreadsheetRow } from '../data/spreadsheetData';
+
+// Register AG Grid modules
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 type CellRendererParams = {
@@ -39,44 +35,40 @@ type CellRendererParamsother = {
     priorityColor: string;
   };
 };
-
-
 const TableView: React.FC = () => {
-  const emptyRows = useMemo(() => Array.from({ length: 15 }, () => ({})), []);
- const rowDataWithBlank: SpreadsheetRow[] = useMemo(() => [...spreadsheetData, ...emptyRows], [emptyRows]);
-  
+  const emptyRows = useMemo(() => Array.from({ length: 15 }, () => ({} as SpreadsheetRow)), []);
+  const rowDataWithBlank: SpreadsheetRow[] = useMemo(() => [...spreadsheetData, ...emptyRows], [emptyRows]);
 
-  const columnDefs = useMemo(() => [
-   {
+  const columnDefs: ColDef<SpreadsheetRow>[] = useMemo(() => [
+    {
       headerName: '#',
-      width: 40, 
-      valueGetter: (params: ValueGetterParams<SpreadsheetRow, unknown, unknown>) =>
-    (params.node?.rowIndex ?? 0) + 1,
+      width: 40,
+      valueGetter: (params: ValueGetterParams<SpreadsheetRow>) => (params.node?.rowIndex ?? 0) + 1,
       suppressMovable: true,
-      },
+    },
     {
       headerName: '',
-      field: 'jobRequest',
-      headerStyle: { margin:0,padding: 0,},
+      field: 'jobRequest' as keyof SpreadsheetRow,
+      headerStyle: { margin: 0, padding: 0 },
       width: 250,
       tooltipField: 'jobRequest',
       headerComponent: JobRequestHeader,
     },
     {
       headerName: '',
-      field: 'submittedDate',
+      field: 'submittedDate' as keyof SpreadsheetRow,
       width: 150,
-      headerStyle: { margin:0,padding: 0,},
+      headerStyle: { margin: 0, padding: 0 },
       headerComponent: SubmittedHeaderComponent,
       cellStyle: { textAlign: 'center' },
     },
     {
       headerName: '',
-      field: 'status',
+      field: 'status' as keyof SpreadsheetRow,
       width: 150,
-      headerStyle: { margin:0,padding: 0,},
+      headerStyle: { margin: 0, padding: 0 },
       headerComponent: StatusHeader,
-      cellRenderer: (params: CellRendererParams) => {
+      cellRenderer: (params:CellRendererParams) => {
         if (!params.value) return '';
         return (
           <span
@@ -92,57 +84,67 @@ const TableView: React.FC = () => {
             {params.value}
           </span>
         );
-      }
+      },
     },
-    { headerName: 'Submitter', field: 'submitter', width: 150 , headerComponent: SubmitHeader,headerStyle: { margin:0,padding: 0,},},
+    {
+      headerName: 'Submitter',
+      field: 'submitter' as keyof SpreadsheetRow,
+      width: 150,
+      headerComponent: SubmitHeader,
+      headerStyle: { margin: 0, padding: 0 },
+    },
     {
       headerName: '',
-      field: 'portfolioLink',
+      field: 'portfolioLink' as keyof SpreadsheetRow,
       width: 200,
-      headerStyle: { margin:0,padding: 0,},
+      headerStyle: { margin: 0, padding: 0 },
       headerComponent: UrlHeader,
     },
-    { headerName: 'Name', field: 'name', width: 150 , headerComponent: NameHeader,headerStyle: { margin:0,padding: 0,},},
+    {
+      headerName: 'Name',
+      field: 'name' as keyof SpreadsheetRow,
+      width: 150,
+      headerComponent: NameHeader,
+      headerStyle: { margin: 0, padding: 0 },
+    },
     {
       headerName: 'Priority',
-      field: 'priority',
+      field: 'priority' as keyof SpreadsheetRow,
       width: 120,
-      headerStyle: { margin:0,padding: 0,},
+      headerStyle: { margin: 0, padding: 0 },
       headerComponent: PriorityHeader,
-      cellRenderer: (params: CellRendererParamsother) => {
-  return (
-    <span
-      style={{
-        color: params.data.priorityColor,
-        fontWeight: 700,
-      }}
-    >
-      {params.value}
-    </span>
-  );
-}
-
+      cellRenderer: (params:CellRendererParamsother) => (
+        <span
+          style={{
+            color: params.data?.priorityColor,
+            fontWeight: 700,
+          }}
+        >
+          {params.value}
+        </span>
+      ),
     },
     {
       headerName: 'Due Date',
-      field: 'dueDate',
+      field: 'dueDate' as keyof SpreadsheetRow,
       width: 120,
-      headerStyle: { margin:0,padding: 0,},
+      headerStyle: { margin: 0, padding: 0 },
       headerComponent: DueDateHeader,
     },
     {
       headerName: 'Value',
-      field: 'value',
+      field: 'value' as keyof SpreadsheetRow,
       width: 120,
-      headerStyle: { margin:0,padding: 0,},
+      headerStyle: { margin: 0, padding: 0 },
       headerComponent: ValueHeader,
       cellStyle: { textAlign: 'right' },
-      valueFormatter: (params: { value?: string | number }) =>
-  params.value ? `${params.value} ₹` : ''
-
-    },{
+      valueFormatter: (params) => (params.value ? `${params.value} ₹` : ''),
+    },
+    {
+      headerName: '',
+      field: '' as keyof SpreadsheetRow, // empty placeholder if needed
       flex: 1,
-    }
+    },
   ], []);
 
   const defaultColDef = useMemo(() => ({
@@ -152,10 +154,9 @@ const TableView: React.FC = () => {
   }), []);
 
   return (
-    <div className="ag-theme-quartz" style={{ width: '100%',overflowX: 'hidden', }}>
-
+    <div className="ag-theme-quartz" style={{ width: '100%', overflowX: 'hidden' }}>
       <TableHeader />
-     <AgGridReact<SpreadsheetRow>
+      <AgGridReact<SpreadsheetRow>
         rowData={rowDataWithBlank}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
