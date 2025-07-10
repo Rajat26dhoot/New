@@ -3,6 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ClientSideRowModelModule } from 'ag-grid-community';
 import { ModuleRegistry } from 'ag-grid-community';
 import TableHeader from './TableHeader';
+import type { ValueGetterParams } from 'ag-grid-community';
 
 // Styles
 import 'ag-grid-community/styles/ag-grid.css';
@@ -49,7 +50,8 @@ const TableView: React.FC = () => {
    {
       headerName: '#',
       width: 40, 
-      valueGetter: (params: { node: { rowIndex: number } }) => params.node.rowIndex + 1,
+      valueGetter: (params: ValueGetterParams<SpreadsheetRow, unknown, unknown>) =>
+    (params.node?.rowIndex ?? 0) + 1,
       suppressMovable: true,
       },
     {
