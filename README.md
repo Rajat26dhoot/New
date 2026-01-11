@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SafeDep Package Viewer
+
+This is a Next.js 16 application that displays insights about open source packages using the SafeDep API. It provides a detailed view of package metadata, vulnerabilities, version history, and license information.
+
+## Features
+
+- **Package Insights**: Comprehensive metadata including analysis date, source URL, and SHA256 checksums.
+- **Metrics Dashboard**: Quick view of key metrics like vulnerability count, OpenSSF Scorecard rating, and license type.
+- **Vulnerability Analysis**: Detailed table of known vulnerabilities with risk levels (Critical, High, Medium, Low).
+- **Version History**: Complete list of package versions with release dates.
+- **License Information**: Detailed license data with reference links.
+- **Responsive Design**: Fully responsive UI built with Tailwind CSS.
+- **Mock Data Support**: Automatic fallback to mock data when API credentials are not provided.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Shadcn UI
+- **Icons**: Lucide React
+- **Data Fetching**: Next.js Server Actions
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js 18.17 or later
+- npm
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd safedeep-viewer
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. Set up environment variables (Optional):
+   Create a `.env.local` file in the root directory and add your SafeDep API credentials. If skipped, the app will use mock data.
+   ```env
+   SAFEDEP_TENANT_ID=your-tenant-id
+   SAFEDEP_API_KEY=your-api-key
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Open [http://localhost:3000/p/npm/next/15.5.4](http://localhost:3000/p/npm/next/15.5.4) with your browser to see the result.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+- `src/app/p/[ecosystem]/[name]/[version]`: Dynamic route for package details page.
+- `src/components`: Reusable UI components.
+  - `metrics-cards.tsx`: Dashboard metrics.
+  - `package-header.tsx`: Package metadata header.
+  - `tabs`: Tab content components (Overview, Vulnerabilities, Versions, License).
+- `src/lib/api`: API client and type definitions.
+- `src/lib/actions`: Server Actions for data fetching.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Navigate to the URL following this pattern:
+`http://localhost:3000/p/{ecosystem}/{package-name}/{version}`
+
+Example:
+- [http://localhost:3000/p/npm/next/15.5.4](http://localhost:3000/p/npm/next/15.5.4)
+- [http://localhost:3000/p/pypi/requests/2.31.0](http://localhost:3000/p/pypi/requests/2.31.0)
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
